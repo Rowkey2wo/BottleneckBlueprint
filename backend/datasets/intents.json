@@ -1,0 +1,146 @@
+{
+    "intents": [
+      {
+        "tag": "greeting",
+        "patterns": ["hi", "hello", "hey", "greetings", "what's up", "sup", "hola", "howdy", "h3llo", "h1", "hii", "helllo"],
+        "responses": ["Hello! Welcome to FPS Calculator. Which game would you like to check FPS for?", "Hi there! Ready to check your gaming performance?", "Hey! What game are you interested in?"]
+      },
+      {
+        "tag": "goodbye",
+        "patterns": ["bye", "goodbye", "see you", "farewell", "take care", "bye bye", "catch you later", "later", "bye!", "bye2", "gbye"],
+        "responses": ["See you later! Good luck with your gaming!", "Goodbye! Come back anytime!", "See you soon!"]
+      },
+      {
+        "tag": "fps_query",
+        "patterns": [
+          "what fps will I get",
+          "how many fps",
+          "fps for",
+          "frame rate for",
+          "performance for",
+          "can I run",
+          "will my pc run",
+          "fps estimate",
+          "h0w many fps",
+          "wht fps",
+          "fr4mes per second",
+          "fps 4",
+          "f1ps for"
+        ],
+        "responses": [
+          "Based on your specs, I can estimate your FPS for any game. What game would you like to check?",
+          "I can help you estimate FPS! Which game are you interested in?",
+          "Tell me which game, and I'll estimate your FPS!"
+        ]
+      },
+      {
+        "tag": "cpu_question",
+        "patterns": [
+          "what is cpu",
+          "cpu meaning",
+          "what does cpu do",
+          "processor info",
+          "cpu important",
+          "processor bottleneck",
+          "what is processor",
+          "wut is cpu",
+          "wh4t is cpu",
+          "cpu mean",
+          "c0u mean"
+        ],
+        "responses": [
+          "CPU (Processor) is your computer's brain. It's crucial for gaming performance. Higher CPU speed = better FPS!",
+          "The CPU is your processor - it handles calculations and controls your GPU. A good CPU is essential for high FPS.",
+          "CPU stands for Central Processing Unit. It's vital for gaming!"
+        ]
+      },
+      {
+        "tag": "gpu_question",
+        "patterns": [
+          "what is gpu",
+          "gpu meaning",
+          "graphics card info",
+          "what does gpu do",
+          "gpu important",
+          "what is graphics card",
+          "wut is gpu",
+          "wh4t is gpu",
+          "gpu mean",
+          "gr4phics card"
+        ],
+        "responses": [
+          "GPU (Graphics Card) renders your game graphics. A powerful GPU directly impacts your FPS!",
+          "Your GPU (graphics card) is responsible for rendering game visuals. Better GPU = better graphics and FPS!",
+          "The GPU handles all graphics rendering. It's the most important component for gaming FPS!"
+        ]
+      },
+      {
+        "tag": "resolution_question",
+        "patterns": [
+          "what is resolution",
+          "resolution meaning",
+          "1080p vs 1440p",
+          "resolution 4k",
+          "resolution impact",
+          "what resolution",
+          "wut is resolution",
+          "wh4t is resolution",
+          "r3solution mean",
+          "1080p mean"
+        ],
+        "responses": [
+          "Resolution is the number of pixels on your screen. Higher resolution = more beautiful but lower FPS. 1920x1080 (1080p) is standard, 1440p is higher quality, 4K is ultra-high quality.",
+          "Resolution affects image quality and FPS. 1080p is the standard, 1440p is sharper, 4K is beautiful but demanding!",
+          "Higher resolutions look better but reduce FPS. Choose between beauty and performance!"
+        ]
+      },
+      {
+        "tag": "game_recommendations",
+        "patterns": [
+          "what games can I run",
+          "best games for my pc",
+          "recommend games",
+          "which games",
+          "good games",
+          "can I play",
+          "will I be able to play",
+          "wh4t g4mes",
+          "g@mes for my pc"
+        ],
+        "responses": [
+          "Based on your specs, you can run many games! Tell me your CPU, GPU, and resolution, and I'll tell you the FPS!",
+          "I can recommend games! Let me know your specs first.",
+          "Tell me your system specs, and I'll tell you which games you can play!"
+        ]
+      },
+      {
+        "tag": "upgrade_question",
+        "patterns": [
+          "should I upgrade",
+          "do I need to upgrade",
+          "upgrade recommendation",
+          "what should I upgrade",
+          "is my pc good",
+          "is my pc enough",
+          "should i buy new gpu",
+          "shud i upgr4de",
+          "upGr4de advice"
+        ],
+        "responses": [
+          "It depends on what games you want to play and your target FPS! Tell me your specs and target game.",
+          "Upgrades depend on your needs. What's your current setup and what games do you want to play?",
+          "Before upgrading, tell me your specs. I can then recommend the best upgrade path!"
+        ]
+      },
+      {
+        "tag": "thanks",
+        "patterns": ["thanks", "thank you", "appreciate it", "thanks a lot", "thx", "thnx", "tyvm", "th4nks", "thks"],
+        "responses": ["You're welcome!", "Happy to help!", "Glad I could assist!"]
+      },
+      {
+        "tag": "help",
+        "patterns": ["help", "can you help", "help me", "assist", "support", "h3lp me", "h31p", "can u help"],
+        "responses": ["Of course! I'm here to help with FPS calculations. What do you need?", "I'm happy to help! What's your question?", "Sure! How can I assist you?"]
+      }
+    ]
+  }
