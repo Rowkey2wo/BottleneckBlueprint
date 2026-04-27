@@ -16,6 +16,7 @@ export default function AIChatBot() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [specs, setSpecs] = useState<any>(null);
+  const [conversationState, setConversationState] = useState<any>({});
   const [isListening, setIsListening] = useState(false);
   const [micError, setMicError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -126,7 +127,7 @@ export default function AIChatBot() {
       const initialMessage: Message = {
         id: "1",
         type: "bot",
-        content: `Great! I have your specs:\n• CPU: ${parsedSpecs.cpu}\n• GPU: ${parsedSpecs.gpu}\n• Resolution: ${parsedSpecs.resolution}\n\nNow, which game would you like to check FPS for?`,
+        content: `Great! I have your specs:\n• CPU: ${parsedSpecs.cpu}\n• GPU: ${parsedSpecs.gpu}\n• Resolution: ${parsedSpecs.resolution}\n\nNow, which game would you like to check FPS for?\n\n💡 Tip: You can say "change my GPU" anytime to update your specs!`,
         timestamp: new Date(),
       };
       setMessages([initialMessage]);
@@ -145,6 +146,13 @@ export default function AIChatBot() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Update sessionStorage whenever specs change
+  useEffect(() => {
+    if (specs) {
+      sessionStorage.setItem("selectedSpecs", JSON.stringify(specs));
+    }
+  }, [specs]);
 
   const toggleMicrophone = () => {
     if (!isBrowserSupported) {
@@ -191,24 +199,37 @@ export default function AIChatBot() {
       timestamp: new Date(),
     };
     setMessages((prev) => [...prev, userMessage]);
+    const sentInput = input;
     setInput("");
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://bottleneckblueprint.onrender.com/api/chat', {
+      // const response = await fetch('https://bottleneckblueprint.onrender.com/api/chat', {
+      const response = await fetch('http://localhost:5000/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: input,
-          specs: specs
+          message: sentInput,
+          specs: specs,
+          conversation_state: conversationState,
         })
       });
 
       const data = await response.json();
 
       if (data.status === 'success') {
+        // Update specs if backend changed them
+        if (data.updated_specs) {
+          setSpecs(data.updated_specs);
+        }
+
+        // Update conversation state
+        if (data.conversation_state !== undefined) {
+          setConversationState(data.conversation_state);
+        }
+
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
           type: "bot",
@@ -257,6 +278,7 @@ export default function AIChatBot() {
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-white">FPS Calculator</h1>
+            {/* Shows live updated specs whenever user changes them */}
             <p className="text-xs text-[#64748B] mt-1">
               {specs && `${specs.cpu} • ${specs.gpu} • ${specs.resolution}`}
             </p>
@@ -366,7 +388,13 @@ export default function AIChatBot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && !isLoading && input.trim() && handleSendMessage()}
-              placeholder="Ask about FPS or games..."
+              placeholder={
+                conversationState?.state === "awaiting_spec_category"
+                  ? "Type CPU, GPU, or Resolution..."
+                  : conversationState?.state?.includes("awaiting") && conversationState?.state?.includes("pick")
+                  ? "Type 1, 2, or 3 to pick..."
+                  : "Ask about FPS, games, or say 'change my GPU'..."
+              }
               className="flex-1 px-4 py-3 bg-slate-900 border border-[#1E293B] rounded-lg text-white placeholder-[#64748B] focus:border-[#00D4FF] focus:outline-none"
               disabled={isLoading}
               autoFocus
