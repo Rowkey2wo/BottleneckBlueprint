@@ -189,8 +189,8 @@ export default function AIChatBot() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch('https://bottleneckblueprint.onrender.com/api/chat', {
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch('https://bottleneckblueprint.onrender.com/api/chat', {
+      // const response = await fetch('http://localhost:5000/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -328,7 +328,7 @@ export default function AIChatBot() {
           {/* Listening indicator */}
           {isListening && (
             <div className="mb-3 flex items-center gap-2 px-1">
-              <div className="flex gap-[3px] items-end h-4">
+              <div className="flex gap-0.75 items-end h-4">
                 <div className="w-1 rounded-full bg-[#FF6B35] animate-bounce" style={{ height: "60%", animationDelay: "0s" }}></div>
                 <div className="w-1 rounded-full bg-[#FF6B35] animate-bounce" style={{ height: "100%", animationDelay: "0.15s" }}></div>
                 <div className="w-1 rounded-full bg-[#FF6B35] animate-bounce" style={{ height: "70%", animationDelay: "0.3s" }}></div>
