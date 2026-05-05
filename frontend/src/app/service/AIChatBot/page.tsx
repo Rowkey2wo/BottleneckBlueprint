@@ -242,7 +242,7 @@ export default function AIChatBot() {
 
   const handleBackToSpecs = () => {
     sessionStorage.removeItem("selectedSpecs");
-    if (isListening && recognitionRef.current) recognitionRef.current.abort();
+    if (isListening && recognitionRef.current) recognitionRef.current.abort();  
     router.push("/service");
   };
 

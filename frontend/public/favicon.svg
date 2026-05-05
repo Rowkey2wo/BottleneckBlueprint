@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://w3.org">
+  <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="none" stroke="#00D4FF" stroke-width="2"/>
+  <polygon points="20,8 30,14 30,26 20,32 10,26 10,14" fill="#00D4FF" fill-opacity="0.1"/>
+  <text x="20" y="25" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#00D4FF">BB</text>
+</svg>
