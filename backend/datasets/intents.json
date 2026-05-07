@@ -222,6 +222,37 @@
         "Optimize by turning off anti-aliasing, lowering texture quality, disabling bloom, and closing unnecessary background applications.",
         "For better performance: use high-performance power settings, clean dust from your PC, and consider overclocking!"
       ]
+    },
+    {
+      "tag": "fps_meaning",
+      "patterns": [
+        "what is fps",
+        "what does fps mean",
+        "fps meaning",
+        "what is frames per second",
+        "explain fps",
+        "fps definition",
+        "wut is fps",
+        "wh4t is fps",
+        "f p s meaning",
+        "what does fps stand for",
+        "fps stand for",
+        "what is frame rate",
+        "frame rate meaning",
+        "why does fps matter",
+        "does fps matter",
+        "is fps important",
+        "why is fps important",
+        "how does fps work",
+        "fps explained"
+      ],
+      "responses": [
+        "FPS stands for Frames Per Second — it measures how many images your PC renders every second. Higher FPS = smoother gameplay! 🎮",
+        "FPS (Frames Per Second) is how many frames your GPU renders each second. 60 FPS is smooth, 144 FPS is competitive, 240+ FPS is ultra-smooth!",
+        "Think of FPS like a flipbook — the more pages (frames) per second, the smoother the animation. More FPS = smoother gaming experience!",
+        "FPS measures your game's smoothness. Below 30 FPS feels laggy, 60 FPS is comfortable, 144+ FPS is ideal for competitive gaming!",
+        "Frames Per Second (FPS) = how many images your screen shows per second. Higher FPS means less blur and faster response — crucial for competitive games like Valorant or CS2!"
+      ]
     }
   ]
 }

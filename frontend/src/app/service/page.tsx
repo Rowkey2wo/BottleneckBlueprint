@@ -11,12 +11,16 @@ export default function ServicePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const cpuOptions = [
+    { value: "i3-12100", label: "Intel i3-12100" },
     { value: "i5-13600K", label: "Intel i5-13600K" },
     { value: "i7-13700K", label: "Intel i7-13700K" },
     { value: "ryzen-7-7800X3D", label: "AMD Ryzen 7 7800X3D" },
   ];
 
   const gpuOptions = [
+    { value: "gtx-1050", label: "NVIDIA GTX 1050" },
+    { value: "gtx-1650", label: "NVIDIA GTX 1650" },
+    { value: "rtx-3050", label: "NVIDIA RTX 3050" },
     { value: "rtx-4060", label: "NVIDIA RTX 4060 Ti" },
     { value: "rtx-4070", label: "NVIDIA RTX 4070" },
     { value: "rtx-4090", label: "NVIDIA RTX 4090" },
