@@ -19,9 +19,7 @@ with open('models/tag_mappings.pkl', 'rb') as f:
 index_to_tag = mappings['index_to_tag']
 intents = mappings['intents']
 
-# ---------------------------------------------------------------------------
 # FPS Data Table
-# ---------------------------------------------------------------------------
 fps_data = {
     "i3-12100": {
         "gtx-1050":  {"1920x1080": 45,  "2560x1440": 28,  "3840x2160": 15},
@@ -57,9 +55,7 @@ fps_data = {
     },
 }
 
-# ---------------------------------------------------------------------------
 # Available options lists (shown to user when changing specs)
-# ---------------------------------------------------------------------------
 cpu_options = {
     "1": "i3-12100",
     "2": "i5-13600K",
@@ -82,9 +78,7 @@ resolution_options = {
     "3": "3840x2160",
 }
 
-# ---------------------------------------------------------------------------
 # Game multipliers
-# ---------------------------------------------------------------------------
 game_multipliers = {
     "valorant":          2.2,
     "cs2":               1.8,
@@ -119,9 +113,7 @@ game_multipliers = {
     "the last of us":    0.65,
 }
 
-# ---------------------------------------------------------------------------
 # Friendly display names
-# ---------------------------------------------------------------------------
 cpu_display = {
     "i3-12100":        "Intel i3-12100",
     "i5-13600K":       "Intel i5-13600K",
@@ -144,9 +136,7 @@ resolution_display = {
     "3840x2160": "4K (3840x2160)",
 }
 
-# ---------------------------------------------------------------------------
 # FPS rating helper
-# ---------------------------------------------------------------------------
 def fps_rating(fps: int) -> str:
     if fps >= 200: return "🟢 Exceptional"
     if fps >= 144: return "🟢 Excellent"
@@ -155,9 +145,7 @@ def fps_rating(fps: int) -> str:
     if fps >= 30:  return "🟠 Playable"
     return "🔴 Poor"
 
-# ---------------------------------------------------------------------------
 # Detect known game
-# ---------------------------------------------------------------------------
 def detect_game(text: str):
     text_lower = text.lower()
     for game in sorted(game_multipliers.keys(), key=len, reverse=True):
@@ -165,9 +153,7 @@ def detect_game(text: str):
             return game
     return None
 
-# ---------------------------------------------------------------------------
 # Detect if user wants to change specs
-# ---------------------------------------------------------------------------
 def detect_change_request(text: str) -> bool:
     keywords = [
         "change", "switch", "update", "different", "modify",
@@ -179,9 +165,7 @@ def detect_change_request(text: str) -> bool:
     text_lower = text.lower()
     return any(k in text_lower for k in keywords)
 
-# ---------------------------------------------------------------------------
 # Detect which specific spec category user wants to change
-# ---------------------------------------------------------------------------
 def detect_spec_category(text: str):
     text_lower = text.lower()
     if any(k in text_lower for k in ["cpu", "processor", "intel", "amd", "ryzen"]):
@@ -192,22 +176,17 @@ def detect_spec_category(text: str):
         return "resolution"
     return None
 
-# ---------------------------------------------------------------------------
 # Detect if user is picking a numbered option (1, 2, 3)
-# ---------------------------------------------------------------------------
 def detect_option_pick(text: str):
     text_stripped = text.strip()
     if text_stripped in ["1", "2", "3", "4", "5", "6"]:
         return text_stripped
-    # Also handle words like "first", "second", "third"
     if text_stripped in ["first", "one"]:  return "1"
     if text_stripped in ["second", "two"]: return "2"
     if text_stripped in ["third", "three"]: return "3"
     return None
 
-# ---------------------------------------------------------------------------
 # Option list messages
-# ---------------------------------------------------------------------------
 def cpu_options_message() -> str:
     return (
         "Which CPU would you like to switch to?\n\n"
@@ -248,9 +227,20 @@ def ask_which_spec_message() -> str:
         "Just type which one!"
     )
 
-# ---------------------------------------------------------------------------
+# Unknown input response
+def unknown_input_response() -> str:
+    return (
+        "Hmm, I'm not sure I understood that. 🤔\n\n"
+        "Here's what I can help you with:\n"
+        "🎮 FPS estimates — just type a game name!\n"
+        "🖥️  PC specs info — ask about CPU, GPU, or Resolution\n"
+        "⚡ Upgrade advice — ask 'should I upgrade?'\n"
+        "🔧 Performance tips — ask 'how to boost FPS?'\n"
+        "🍾 Bottleneck info — ask 'what is bottleneck?'\n\n"
+        "Or try asking about a specific game like 'Valorant' or 'Cyberpunk 2077'!"
+    )
+
 # Build FPS response
-# ---------------------------------------------------------------------------
 def build_fps_response(game: str, specs: dict) -> str:
     cpu = specs.get("cpu", "")
     gpu = specs.get("gpu", "")
@@ -282,9 +272,7 @@ def build_fps_response(game: str, specs: dict) -> str:
         f"{'✅ This is well above 60 FPS — enjoy buttery smooth gameplay!' if estimated_fps >= 60 else '⚠️ You may want to lower settings for a smoother experience.'}"
     )
 
-# ---------------------------------------------------------------------------
 # Unknown game response
-# ---------------------------------------------------------------------------
 def unknown_game_response() -> str:
     return (
         "Sorry, I don't have FPS data for that game yet! 😅\n\n"
@@ -297,9 +285,7 @@ def unknown_game_response() -> str:
         "Try asking about one of these! 👆"
     )
 
-# ---------------------------------------------------------------------------
 # Build upgrade response
-# ---------------------------------------------------------------------------
 def build_upgrade_response(specs: dict) -> str:
     cpu = specs.get("cpu", "")
     gpu = specs.get("gpu", "")
@@ -310,7 +296,13 @@ def build_upgrade_response(specs: dict) -> str:
     res_name = resolution_display.get(resolution, resolution)
 
     suggestions = []
-    if gpu == "rtx-4060":
+    if gpu == "gtx-1050":
+        suggestions.append("• Upgrading to the GTX 1650 or RTX 3050 would give you a noticeable FPS boost.")
+    elif gpu == "gtx-1650":
+        suggestions.append("• Upgrading to the RTX 3050 or RTX 4060 would give you a solid FPS improvement.")
+    elif gpu == "rtx-3050":
+        suggestions.append("• Upgrading to the RTX 4060 Ti would give you ~30% more FPS.")
+    elif gpu == "rtx-4060":
         suggestions.append("• Upgrading to the RTX 4070 would give you ~25% more FPS.")
     elif gpu == "rtx-4070":
         suggestions.append("• Upgrading to the RTX 4090 would give you ~30% more FPS for demanding titles.")
@@ -330,19 +322,8 @@ def build_upgrade_response(specs: dict) -> str:
         + "\n".join(suggestions)
     )
 
-# ---------------------------------------------------------------------------
 # Main response function
-# ---------------------------------------------------------------------------
 def get_response(user_input: str, specs: dict | None, conversation_state: dict | None) -> tuple:
-    """
-    Returns (response_text, updated_specs, updated_state)
-    conversation_state tracks what we're waiting for:
-      - "awaiting_spec_category" — waiting for user to say CPU/GPU/Resolution
-      - "awaiting_cpu_pick"      — waiting for user to pick 1/2/3 for CPU
-      - "awaiting_gpu_pick"      — waiting for user to pick 1/2/3 for GPU
-      - "awaiting_resolution_pick" — waiting for user to pick 1/2/3 for Resolution
-      - None                     — normal conversation
-    """
     if conversation_state is None:
         conversation_state = {}
 
@@ -351,9 +332,7 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
     current_state = conversation_state.get("state", None)
     updated_specs = specs.copy() if specs else {}
 
-    # -----------------------------------------------------------------------
     # STATE: Waiting for user to pick a numbered option for CPU
-    # -----------------------------------------------------------------------
     if current_state == "awaiting_cpu_pick":
         pick = detect_option_pick(fixed_input)
         if pick and pick in cpu_options:
@@ -370,11 +349,9 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
                 {"state": None}
             )
         else:
-            return ("Please reply with 1, 2, or 3 to pick a CPU.", updated_specs, conversation_state)
+            return ("Please reply with 1–4 to pick a CPU.", updated_specs, conversation_state)
 
-    # -----------------------------------------------------------------------
     # STATE: Waiting for user to pick a numbered option for GPU
-    # -----------------------------------------------------------------------
     if current_state == "awaiting_gpu_pick":
         pick = detect_option_pick(fixed_input)
         if pick and pick in gpu_options:
@@ -391,11 +368,9 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
                 {"state": None}
             )
         else:
-            return ("Please reply with 1, 2, or 3 to pick a GPU.", updated_specs, conversation_state)
+            return ("Please reply with 1–6 to pick a GPU.", updated_specs, conversation_state)
 
-    # -----------------------------------------------------------------------
     # STATE: Waiting for user to pick a numbered option for Resolution
-    # -----------------------------------------------------------------------
     if current_state == "awaiting_resolution_pick":
         pick = detect_option_pick(fixed_input)
         if pick and pick in resolution_options:
@@ -414,9 +389,7 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
         else:
             return ("Please reply with 1, 2, or 3 to pick a resolution.", updated_specs, conversation_state)
 
-    # -----------------------------------------------------------------------
     # STATE: Waiting for user to say which spec category to change
-    # -----------------------------------------------------------------------
     if current_state == "awaiting_spec_category":
         category = detect_spec_category(fixed_input)
         if category == "cpu":
@@ -432,13 +405,10 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
                 conversation_state
             )
 
-    # -----------------------------------------------------------------------
     # NORMAL FLOW
-    # -----------------------------------------------------------------------
 
     # Check if user wants to change specs
     if detect_change_request(fixed_input):
-        # Check if they already specified which one (e.g. "change my GPU")
         category = detect_spec_category(fixed_input)
         if category == "cpu":
             return (cpu_options_message(), updated_specs, {"state": "awaiting_cpu_pick"})
@@ -455,31 +425,24 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
         return (build_fps_response(game, updated_specs), updated_specs, {"state": None})
 
     if not processed_input:
-        return ("I didn't quite understand that. Could you rephrase?", updated_specs, {"state": None})
+        return (unknown_input_response(), updated_specs, {"state": None})
 
     # ML intent prediction
     try:
         prediction = model.predict([processed_input])[0]
         confidence = max(model.predict_proba([processed_input])[0])
         tag = index_to_tag.get(prediction, "unknown")
+
+        # If model is not confident enough, treat as unknown input
+        if confidence < 0.25:
+            return (unknown_input_response(), updated_specs, {"state": None})
+
     except Exception:
         return ("Sorry, I encountered an error. Please try again.", updated_specs, {"state": None})
 
     if specs:
         if tag in ("fps_query", "game_recommendations"):
-            # No known game typed — assume unknown game
             return (unknown_game_response(), updated_specs, {"state": None})
-
-        if tag == "fps_query":
-            return (
-                "Sure! I can estimate FPS for your setup:\n"
-                f"• CPU: {cpu_display.get(specs.get('cpu',''), specs.get('cpu',''))}\n"
-                f"• GPU: {gpu_display.get(specs.get('gpu',''), specs.get('gpu',''))}\n"
-                f"• Resolution: {resolution_display.get(specs.get('resolution',''), specs.get('resolution',''))}\n\n"
-                "Just tell me the game you want to check!",
-                updated_specs,
-                {"state": None}
-            )
 
         if tag == "upgrade_question":
             return (build_upgrade_response(specs), updated_specs, {"state": None})
@@ -509,15 +472,10 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
         if intent["tag"] == tag:
             return (random.choice(intent["responses"]), updated_specs, {"state": None})
 
-    if specs:
-        return (unknown_game_response(), updated_specs, {"state": None})
-
-    return ("I'm not sure about that. Could you tell me more?", updated_specs, {"state": None})
+    return (unknown_input_response(), updated_specs, {"state": None})
 
 
-# ---------------------------------------------------------------------------
 # Routes
-# ---------------------------------------------------------------------------
 @app.route('/api/chat', methods=['POST'])
 def chat():
     try:
