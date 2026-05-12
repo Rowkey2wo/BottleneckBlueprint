@@ -61,7 +61,13 @@
         "wut is cpu",
         "wh4t is cpu",
         "cpu mean",
-        "c0u mean"
+        "c0u mean",
+        "explain cpu",
+        "tell me about cpu",
+        "how does cpu work",
+        "why is cpu important",
+        "what does a processor do",
+        "cpu for gaming"
       ],
       "responses": [
         "CPU (Processor) is your computer's brain. It's crucial for gaming performance. Higher CPU speed = better FPS!",
@@ -83,7 +89,13 @@
         "wut is gpu",
         "wh4t is gpu",
         "gpu mean",
-        "gr4phics card"
+        "gr4phics card",
+        "explain gpu",
+        "tell me about gpu",
+        "how does gpu work",
+        "why is gpu important",
+        "what does a graphics card do",
+        "gpu for gaming"
       ],
       "responses": [
         "GPU (Graphics Card) renders your game graphics. A powerful GPU directly impacts your FPS!",
@@ -105,7 +117,15 @@
         "wut is resolution",
         "wh4t is resolution",
         "r3solution mean",
-        "1080p mean"
+        "1080p mean",
+        "explain resolution",
+        "tell me about resolution",
+        "how does resolution affect fps",
+        "why does resolution matter",
+        "what is 4k",
+        "what is 1080p",
+        "what is 1440p",
+        "difference between 1080p and 4k"
       ],
       "responses": [
         "Resolution is the number of pixels on your screen. Higher resolution = more beautiful but lower FPS. 1920x1080 (1080p) is standard, 1440p is higher quality, 4K is ultra-high quality.",
@@ -126,7 +146,20 @@
         "can I play",
         "will I be able to play",
         "wh4t g4mes",
-        "g@mes for my pc"
+        "g@mes for my pc",
+        "what games do you recommend",
+        "what games should i play",
+        "recommend me a game",
+        "suggest a game",
+        "what games can my pc handle",
+        "games for my setup",
+        "what games run well",
+        "what games can i run smoothly",
+        "good games for my specs",
+        "games compatible with my pc",
+        "what can my pc run",
+        "can my pc handle games",
+        "what games are good for my pc"
       ],
       "responses": [
         "Based on your specs, you can run many games! Tell me your CPU, GPU, and resolution, and I'll tell you the FPS!",
@@ -147,7 +180,23 @@
         "is my pc enough",
         "should i buy new gpu",
         "shud i upgr4de",
-        "upGr4de advice"
+        "upGr4de advice",
+        "what specs do i need to upgrade",
+        "which part should i upgrade",
+        "what do i need to upgrade",
+        "what should i buy",
+        "what part to upgrade",
+        "do i need a new gpu",
+        "do i need a new cpu",
+        "is my gpu good enough",
+        "is my cpu good enough",
+        "should i get a better gpu",
+        "should i get a better cpu",
+        "upgrade my pc",
+        "upgrade advice",
+        "best upgrade for gaming",
+        "what upgrade do i need",
+        "how to upgrade my pc"
       ],
       "responses": [
         "It depends on what games you want to play and your target FPS! Tell me your specs and target game.",
@@ -190,7 +239,13 @@
         "how to avoid bottleneck",
         "bottleneck issue",
         "wut is bottleneck",
-        "bottleneck problem"
+        "bottleneck problem",
+        "explain bottleneck",
+        "what does bottleneck mean",
+        "is my pc bottlenecked",
+        "how do i know if i have a bottleneck",
+        "what causes bottleneck",
+        "bottleneck in gaming"
       ],
       "responses": [
         "A bottleneck occurs when one component (CPU or GPU) is much stronger than the other, limiting overall performance.",
@@ -212,7 +267,22 @@
         "how to get more fps",
         "improve gaming",
         "optimize pc",
-        "fps boost tips"
+        "fps boost tips",
+        "how do i improve fps",
+        "how can i get more fps",
+        "how to increase fps",
+        "increase my fps",
+        "tips to improve fps",
+        "make my game run better",
+        "make my pc faster",
+        "how to make games smoother",
+        "game running slow",
+        "my fps is low",
+        "low fps fix",
+        "fix low fps",
+        "why is my fps low",
+        "fps is dropping",
+        "fps drop fix"
       ],
       "responses": [
         "Lower your resolution for more FPS! Or reduce graphics settings and disable ray tracing.",
