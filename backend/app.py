@@ -55,7 +55,7 @@ fps_data = {
     },
 }
 
-# Available options lists (shown to user when changing specs)
+# Available options lists
 cpu_options = {
     "1": "i3-12100",
     "2": "i5-13600K",
@@ -176,7 +176,7 @@ def detect_spec_category(text: str):
         return "resolution"
     return None
 
-# Detect if user is picking a numbered option (1, 2, 3)
+# Detect if user is picking a numbered option
 def detect_option_pick(text: str):
     text_stripped = text.strip()
     if text_stripped in ["1", "2", "3", "4", "5", "6"]:
@@ -332,7 +332,7 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
     current_state = conversation_state.get("state", None)
     updated_specs = specs.copy() if specs else {}
 
-    # STATE: Waiting for user to pick a numbered option for CPU
+    # STATE: Waiting for CPU pick
     if current_state == "awaiting_cpu_pick":
         pick = detect_option_pick(fixed_input)
         if pick and pick in cpu_options:
@@ -351,7 +351,7 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
         else:
             return ("Please reply with 1–4 to pick a CPU.", updated_specs, conversation_state)
 
-    # STATE: Waiting for user to pick a numbered option for GPU
+    # STATE: Waiting for GPU pick
     if current_state == "awaiting_gpu_pick":
         pick = detect_option_pick(fixed_input)
         if pick and pick in gpu_options:
@@ -370,7 +370,7 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
         else:
             return ("Please reply with 1–6 to pick a GPU.", updated_specs, conversation_state)
 
-    # STATE: Waiting for user to pick a numbered option for Resolution
+    # STATE: Waiting for Resolution pick
     if current_state == "awaiting_resolution_pick":
         pick = detect_option_pick(fixed_input)
         if pick and pick in resolution_options:
@@ -389,7 +389,7 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
         else:
             return ("Please reply with 1, 2, or 3 to pick a resolution.", updated_specs, conversation_state)
 
-    # STATE: Waiting for user to say which spec category to change
+    # STATE: Waiting for spec category
     if current_state == "awaiting_spec_category":
         category = detect_spec_category(fixed_input)
         if category == "cpu":
@@ -427,21 +427,24 @@ def get_response(user_input: str, specs: dict | None, conversation_state: dict |
     if not processed_input:
         return (unknown_input_response(), updated_specs, {"state": None})
 
+    # -----------------------------------------------------------------------
     # ML intent prediction
+    # -----------------------------------------------------------------------
     try:
         prediction = model.predict([processed_input])[0]
         confidence = max(model.predict_proba([processed_input])[0])
         tag = index_to_tag.get(prediction, "unknown")
 
         # If model is not confident enough, treat as unknown input
-        if confidence < 0.25:
+        if confidence < 0.15:
             return (unknown_input_response(), updated_specs, {"state": None})
 
     except Exception:
         return ("Sorry, I encountered an error. Please try again.", updated_specs, {"state": None})
 
+    # Handle tags when specs exist
     if specs:
-        if tag in ("fps_query", "game_recommendations"):
+        if tag == "fps_query":
             return (unknown_game_response(), updated_specs, {"state": None})
 
         if tag == "upgrade_question":
